@@ -12,6 +12,7 @@ namespace PatientApi.Models
         public Guid Id { get; set; }
         public Name Name { get; set; }
         public Gender Gender { get; set; }
+        [Required]
         public DateTime BirthDate { get; set; }
         public bool Active { get; set; }
     }
