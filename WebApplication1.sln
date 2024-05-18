@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientsApi", "PatientsApi\PatientsApi.csproj", "{EBBD4DB3-CA48-4867-8754-CA47E09B7C62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedData", "SeedData\SeedData.csproj", "{185EF522-BB1B-4C79-9327-D055F6E45E27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBBD4DB3-CA48-4867-8754-CA47E09B7C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBD4DB3-CA48-4867-8754-CA47E09B7C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBD4DB3-CA48-4867-8754-CA47E09B7C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBD4DB3-CA48-4867-8754-CA47E09B7C62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{185EF522-BB1B-4C79-9327-D055F6E45E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185EF522-BB1B-4C79-9327-D055F6E45E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185EF522-BB1B-4C79-9327-D055F6E45E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185EF522-BB1B-4C79-9327-D055F6E45E27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  patientapi:
+    image: patientapi
+    build:
+      context: .
+      dockerfile: PatientsApi/Dockerfile
+    ports:
+      - "5000:80"
+    volumes:
+      - ./PatientsApi/Patients.db:/app/Patients.db
