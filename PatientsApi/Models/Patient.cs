@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace PatientApi.Models
 {
+    [Index(nameof(BirthDate))]
     public class Patient
     {
         [Key]

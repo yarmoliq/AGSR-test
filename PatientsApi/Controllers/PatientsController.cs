@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PatientApi.Data;
@@ -49,32 +50,19 @@ namespace PatientApi.Controllers
             }
 
             _context.Entry(patient).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PatientExists(id))
-                {
-                    return NotFound();
-                }
-                
-                throw;
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         // POST: api/Patients
         [HttpPost]
-        public async Task<ActionResult<Patient>> PostPatient(Patient patient)
+        public async Task<ActionResult<Guid>> PostPatient(Patient patient)
         {
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPatient", new { id = patient.Id }, patient);
+            return patient.Id;
         }
 
         // DELETE: api/Patients/5
@@ -102,7 +90,6 @@ namespace PatientApi.Controllers
                 return BadRequest("Invalid parameter format. Expected format: [operator][date].");
             }
 
-            // Extract the operator and the date
             var operatorPart = parameter.Substring(0, 2);
             var datePart = parameter.Substring(2);
 
@@ -111,68 +98,32 @@ namespace PatientApi.Controllers
                 return BadRequest("Invalid date format.");
             }
 
-            // Apply filters based on the operator
-            switch (operatorPart)
+            var patients = _context.Patients.Include(p => p.Name).AsQueryable();
+
+            var operation = GetBirthDatePredicate(operatorPart, parsedDate);
+            if (operation == null)
             {
-                case "eq":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate == parsedDate)
-                        .ToListAsync();
-
-                case "ne":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate != parsedDate)
-                        .ToListAsync();
-
-                case "lt":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate < parsedDate)
-                        .ToListAsync();
-
-                case "gt":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate > parsedDate)
-                        .ToListAsync();
-
-                case "le":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate <= parsedDate)
-                        .ToListAsync();
-
-                case "ge":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate >= parsedDate)
-                        .ToListAsync();
-
-                case "sa":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate > parsedDate)
-                        .ToListAsync();
-
-                case "eb":
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate < parsedDate)
-                        .ToListAsync();
-
-                case "ap":
-                    var lowerBound = parsedDate.AddDays(-1);
-                    var upperBound = parsedDate.AddDays(1);
-                    return await _context.Patients
-                        .Include(p => p.Name)
-                        .Where(p => p.BirthDate >= lowerBound && p.BirthDate <= upperBound)
-                        .ToListAsync();
-
-                default:
-                    return BadRequest("Invalid operator. Supported operators: eq, ne, lt, gt, le, ge, sa, eb, ap.");
+                return BadRequest("Invalid operator. Supported operators: eq, ne, lt, gt, le, ge, sa, eb, ap.");
             }
+            
+            return await patients.Where(operation).ToListAsync();
+        }
+        
+        private Expression<Func<Patient, bool>>? GetBirthDatePredicate(string condition, DateTime parsedDate)
+        {
+            return condition switch
+            {
+                "eq" => p => p.BirthDate == parsedDate,
+                "ne" => p => p.BirthDate != parsedDate,
+                "lt" => p => p.BirthDate < parsedDate,
+                "gt" => p => p.BirthDate > parsedDate,
+                "le" => p => p.BirthDate <= parsedDate,
+                "ge" => p => p.BirthDate >= parsedDate,
+                "sa" => p => p.BirthDate > parsedDate,
+                "eb" => p => p.BirthDate < parsedDate,
+                "ap" => p => p.BirthDate >= parsedDate.AddDays(-1) && p.BirthDate <= parsedDate.AddDays(1),
+                _ => null
+            };
         }
 
         private bool PatientExists(Guid id)

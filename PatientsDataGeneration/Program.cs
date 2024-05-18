@@ -10,7 +10,7 @@ namespace PatientApiConsole
 {
     class Program
     {
-        private static readonly HttpClient client = new HttpClient { BaseAddress = new Uri("https://localhost:5000") };
+        private static readonly HttpClient client = new HttpClient { BaseAddress = new Uri("https://localhost:44355") };
 
         static async Task Main(string[] args)
         {
