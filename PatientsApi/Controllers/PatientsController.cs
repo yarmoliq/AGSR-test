@@ -50,9 +50,10 @@ namespace PatientApi.Controllers
             }
 
             _context.Entry(patient).State = EntityState.Modified;
+            _context.Entry(patient.Name).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Patients
@@ -78,20 +79,20 @@ namespace PatientApi.Controllers
             _context.Patients.Remove(patient);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
         
         // GET: api/Patients/SearchByBirthDate
         [HttpGet("SearchByBirthDate")]
-        public async Task<ActionResult<IEnumerable<Patient>>> SearchByBirthDate([FromQuery] string parameter)
+        public async Task<ActionResult<IEnumerable<Patient>>> SearchByBirthDate([FromQuery] string birthDate)
         {
-            if (string.IsNullOrEmpty(parameter) || parameter.Length < 3)
+            if (string.IsNullOrEmpty(birthDate) || birthDate.Length < 3)
             {
                 return BadRequest("Invalid parameter format. Expected format: [operator][date].");
             }
 
-            var operatorPart = parameter.Substring(0, 2);
-            var datePart = parameter.Substring(2);
+            var operatorPart = birthDate.Substring(0, 2);
+            var datePart = birthDate.Substring(2);
 
             if (!DateTime.TryParse(datePart, out DateTime parsedDate))
             {

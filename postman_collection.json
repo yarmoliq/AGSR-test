@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "96fcabbc-6d65-4cf4-9930-980e54654745",
+		"name": "Get by id",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35057758"
+	},
+	"item": [
+		{
+			"name": "add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": {\r\n        \"use\": \"official\",\r\n        \"family\": \"Erdman2\",\r\n        \"given\": [\r\n            \"Elmer2\",\r\n            \"Braxton2\"\r\n        ]\r\n    },\r\n    \"gender\": 2,\r\n    \"birthDate\": \"2019-08-15T00:00:00\",\r\n    \"active\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44355/api/Patients",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44355",
+					"path": [
+						"api",
+						"Patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"a0be1eac-6f10-4728-b80c-2beab961100c\",\r\n    \"name\": {\r\n        \"id\": \"377bf3dc-3506-475d-b6b0-8529072dabcf\",\r\n        \"use\": \"official\",\r\n        \"family\": \"Erdman\",\r\n        \"given\": [\r\n            \"Elmer\",\r\n            \"Braxton\",\r\n            \"Another\"\r\n        ]\r\n    },\r\n    \"gender\": 2,\r\n    \"birthDate\": \"2019-08-14T00:00:00\",\r\n    \"active\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44355/api/Patients/a0be1eac-6f10-4728-b80c-2beab961100c",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44355",
+					"path": [
+						"api",
+						"Patients",
+						"a0be1eac-6f10-4728-b80c-2beab961100c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44355/api/Patients/a0be1eac-6f10-4728-b80c-2beab961100c",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44355",
+					"path": [
+						"api",
+						"Patients",
+						"a0be1eac-6f10-4728-b80c-2beab961100c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44355/api/Patients/73cfe563-fd8f-477d-8f04-f433247076cb",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44355",
+					"path": [
+						"api",
+						"Patients",
+						"73cfe563-fd8f-477d-8f04-f433247076cb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search by eq",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44355/api/Patients/SearchByBirthDate?parameter=eq2019-08-14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44355",
+					"path": [
+						"api",
+						"Patients",
+						"SearchByBirthDate"
+					],
+					"query": [
+						{
+							"key": "parameter",
+							"value": "eq2019-08-14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search by ap",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44355/api/Patients/SearchByBirthDate?parameter=ap2019-08-14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44355",
+					"path": [
+						"api",
+						"Patients",
+						"SearchByBirthDate"
+					],
+					"query": [
+						{
+							"key": "parameter",
+							"value": "ap2019-08-14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search by ge",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44355/api/Patients/SearchByBirthDate?parameter=ge2024-02-01",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44355",
+					"path": [
+						"api",
+						"Patients",
+						"SearchByBirthDate"
+					],
+					"query": [
+						{
+							"key": "parameter",
+							"value": "ge2024-02-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
